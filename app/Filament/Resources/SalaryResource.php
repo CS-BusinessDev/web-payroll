@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SalaryResource\Pages;
 use App\Filament\Resources\SalaryResource\RelationManagers;
+use App\Filament\Resources\SalaryResource\RelationManagers\SalaryDetailsRelationManager;
 use App\Models\Salary;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -133,6 +134,13 @@ class SalaryResource extends Resource
                             ->columns(4),
                     ]),
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            SalaryDetailsRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

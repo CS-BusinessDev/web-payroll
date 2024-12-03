@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\EmployeeResource\Pages;
 use App\Filament\Resources\EmployeeResource\RelationManagers;
+use App\Filament\Resources\EmployeeResource\RelationManagers\EmployeeBusinessEntitiesRelationManager;
+use App\Filament\Resources\EmployeeResource\RelationManagers\SalariesRelationManager;
 use App\Models\Employee;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -88,6 +90,15 @@ class EmployeeResource extends Resource
                     ])
             ]);
     }
+
+    public static function getRelations(): array
+    {
+        return [
+            SalariesRelationManager::class,
+            EmployeeBusinessEntitiesRelationManager::class,
+        ];
+    }
+
 
     public static function getPages(): array
     {

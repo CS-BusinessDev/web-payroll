@@ -24,6 +24,12 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
+        User::create([
+            'name' => 'HR',
+            'username' => 'hr',
+            'password' => bcrypt('hr'),
+        ]);
+
         $entities = [
             ['name' => 'PT Maju Kendaraan Listrik Indonesia', 'code' => 'MKLI'],
             ['name' => 'PT Retail Indonesia Selalu Maju', 'code' => 'RISM'],
@@ -39,6 +45,6 @@ class DatabaseSeeder extends Seeder
         }
 
         Artisan::call('shield:super-admin', ['--user' => 1]);
-        // Artisan::call('shield:generate --all');
+        Artisan::call('shield:generate --all --panel=admin');
     }
 }
