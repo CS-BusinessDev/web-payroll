@@ -10,6 +10,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -67,10 +69,31 @@ class EmployeeResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                // Grid horizontal dengan 2 kolom utama
+                Infolists\Components\Grid::make()
+                    ->schema([
+                        // Card pertama: Informasi Karyawan
+                        Infolists\Components\Card::make()
+                            ->label('Informasi Karyawan')
+                            ->schema([
+                                Infolists\Components\TextEntry::make('employee_id')->label('ID Karyawan'),
+                                Infolists\Components\TextEntry::make('name')->label('Nama'),
+                                Infolists\Components\TextEntry::make('primaryBusinessEntity.businessEntity.name')->label('Badan Usaha'),
+                            ])
+                            ->columns(3),
+                    ])
+            ]);
+    }
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ManageEmployees::route('/'),
+            'view' => Pages\ViewEmployee::route('/{record}'),
         ];
     }
 }

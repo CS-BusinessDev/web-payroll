@@ -10,6 +10,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -92,10 +94,52 @@ class SalaryResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Grid::make()
+                    ->schema([
+                        Infolists\Components\Card::make()
+                            ->label('Informasi Karyawan')
+                            ->schema([
+                                Infolists\Components\TextEntry::make('employee.employee_id')
+                                    ->label('ID Karyawan'),
+                                Infolists\Components\TextEntry::make('employee.name')
+                                    ->label('Nama Karyawan'),
+                                Infolists\Components\TextEntry::make('employee.primaryBusinessEntity.businessEntity.name')
+                                    ->label('Badan Usaha'),
+                                Infolists\Components\TextEntry::make('periode')
+                                    ->label('Periode Gaji'),
+                            ])
+                            ->columns(4),
+
+                        Infolists\Components\Card::make()
+                            ->label('Informasi Keuangan')
+                            ->schema([
+                                Infolists\Components\TextEntry::make('basic_salary')
+                                    ->label('Gaji Pokok')
+                                    ->money('IDR', locale: 'id'),
+                                Infolists\Components\TextEntry::make('total_allowances')
+                                    ->label('Total Tunjangan')
+                                    ->money('IDR', locale: 'id'),
+                                Infolists\Components\TextEntry::make('total_deductions')
+                                    ->label('Total Potongan')
+                                    ->money('IDR', locale: 'id'),
+                                Infolists\Components\TextEntry::make('take_home_pay')
+                                    ->label('Take-Home Pay')
+                                    ->money('IDR', locale: 'id'),
+                            ])
+                            ->columns(4),
+                    ]),
+            ]);
+    }
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ManageSalaries::route('/'),
+            'view' => Pages\ViewSalary::route('/{record}'),
         ];
     }
 }
