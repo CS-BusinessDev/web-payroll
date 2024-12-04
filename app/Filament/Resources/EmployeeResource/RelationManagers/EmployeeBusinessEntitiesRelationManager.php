@@ -28,7 +28,7 @@ class EmployeeBusinessEntitiesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('employee_id')
+            ->recordTitleAttribute('businessEntity.name')
             ->columns([
                 Tables\Columns\TextColumn::make('businessEntity.code')->label('Kode BU'),
                 Tables\Columns\TextColumn::make('businessEntity.name')->label('Nama BU'),
